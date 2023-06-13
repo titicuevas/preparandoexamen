@@ -1,0 +1,39 @@
+-Crear proyecto
+composer create-project laravel/laravel nombre_proyecto
+
+-Tailwind
+npm install
+
+-Meter el flowbite en el proyecto
+https://flowbite.com/docs/getting-started/laravel/
+
+
+-Levantar el servidor
+php artisan serve
+
+
+-Meter breeze
+https://laravel.com/docs/9.x/starter-kits#laravel-breeze
+
+composer require laravel/breeze --dev
+
+-Instalar el paquete
+
+php artisan breeze:install
+
+
+-Crear usuario:
+sudo -u postgres createuser -P nombre
+
+-Crear base de datos:
+sudo -u postgres createdb -O nombre(usuario) nombre(base de datos)
+ 
+php artisan migrate
+npm install
+npm run dev
+
+-Crear modelos
+php artisan make:model -a Nombre (Poner la primera en mayuscula y SINGULAR)
+
+-Crear migraciones
+php artisan make:migration create_nombre_table

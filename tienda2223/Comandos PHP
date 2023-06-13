@@ -1,0 +1,33 @@
+-Coger el fichero psql:
+psql -h localhost -U tienda -d tienda <tienda.sql
+
+-Crear usuario:
+sudo -u postgres createuser -P tienda
+
+-Crear base de datos:
+sudo -u postgres createdb -O tienda tienda
+
+-Diseño de la pagina,tailwind y flowbitre
+npm run watch ==>tailwind
+npm i flowbite ==> flowbite
+
+-Si se clona un proyecto no olvidar 
+npm install
+y
+composer install
+
+-Levantar el servidor, dentro de la carpeta del index 
+php -S localhost :8000
+
+-Ficheros descargados
+Packagist
+squizlbs/php_codesniffer
+
+-Instalar CDN
+https://tailwindcss.com/docs/installation/play-cdn
+
+- Carbon:  para el date time
+Packagist
+
+SI USAMOS LA BASE DE DATOS DE RICARDO 
+Cambiar del auxiliar.php el nombre de la base de datos.

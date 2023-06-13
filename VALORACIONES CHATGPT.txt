@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Valoraciones</title>
+</head>
+<body>
+  <h1>Valoraciones</h1>
+
+  <form method="POST" action="">
+    <label for="valoracion">Valoración:</label>
+    <select name="valoracion" id="valoracion">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+    <button type="submit">Guardar Valoración</button>
+  </form>
+
+  <?php
+  $dbconn = pg_connect("host=localhost dbname=tu_basedatos user=tu_usuario password=tu_contraseña")
+    or die('No se pudo conectar: ' . pg_last_error());
+
+  // Comprobar si se ha enviado una valoración
+  if (isset($_POST['valoracion'])) {
+    $valoracion = $_POST['valoracion'];
+
+    // Insertar la valoración en la base de datos
+    $query = "INSERT INTO valoraciones (valor) VALUES ($valoracion)";
+    pg_query($query) or die('Error al guardar la valoración: ' . pg_last_error());
+  }
+
+  // Obtener la media de las valoraciones
+  $query = "SELECT AVG(valor) AS media FROM valoraciones";
+  $result = pg_query($query) or die('Error al obtener la media: ' . pg_last_error());
+  $row = pg_fetch_assoc($result);
+  $media = $row['media'];
+  pg_free_result($result);
+
+  // Mostrar la media de las valoraciones
+  echo "<h2>Media de valoraciones: " . round($media, 2) . "</h2>";
+
+  // Obtener y mostrar todas las valoraciones
+  $query = "SELECT valor FROM valoraciones";
+  $result = pg_query($query) or die('Error al obtener las valoraciones: ' . pg_last_error());
+
+  echo "<h2>Valoraciones:</h2>";
+  while ($row = pg_fetch_assoc($result)) {
+    echo "Valor: " . $row['valor'] . "<br>";
+  }
+
+  pg_free_result($result);
+  pg_close($dbconn);
+  ?>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+Recuerda reemplazar "tu_basedatos", "tu_usuario" y "tu_contraseña" con los valores correspondientes para tu base de datos PostgreSQL.
+
+En este ejemplo, se muestra un formulario con una caja desplegable que permite al usuario seleccionar una valoración del 1 al 5. Cuando se envía el formulario, se guarda la valoración en la base

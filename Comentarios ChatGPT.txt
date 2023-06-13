@@ -1,0 +1,66 @@
+<?php
+// Conexión a la base de datos
+$dbconn = pg_connect("host=localhost dbname=tu_basedatos user=tu_usuario password=tu_contraseña")
+  or die('No se pudo conectar: ' . pg_last_error());
+
+// Obtener los artículos
+$query = "SELECT * FROM articulos";
+$result = pg_query($query) or die('Error en la consulta: ' . pg_last_error());
+
+// Mostrar los artículos y sus comentarios
+while ($row = pg_fetch_assoc($result)) {
+  echo "<h2>" . $row['titulo'] . "</h2>";
+  echo "<p>" . $row['contenido'] . "</p>";
+
+  // Obtener los comentarios asociados al artículo actual
+  $articulo_id = $row['id'];
+  $query_comentarios = "SELECT * FROM comentarios WHERE articulo_id = $articulo_id";
+  $result_comentarios = pg_query($query_comentarios) or die('Error en la consulta de comentarios: ' . pg_last_error());
+
+  // Mostrar los comentarios
+  echo "<h3>Comentarios:</h3>";
+  while ($row_comentario = pg_fetch_assoc($result_comentarios)) {
+    echo "<p>" . $row_comentario['comentario'] . "</p>";
+  }
+
+  pg_free_result($result_comentarios);
+}
+
+pg_free_result($result);
+pg_close($dbconn);
+?>
+
+
+
+
+/////////////////////////////////////////////
+Esto es el html
+////////////////////////////////////////////
+<!-- Formulario para agregar comentarios -->
+<form method="POST" action="guardar_comentario.php">
+  <input type="hidden" name="articulo_id" value="ID_DEL_ARTICULO">
+  <textarea name="comentario" placeholder="Escribe tu comentario"></textarea>
+  <button type="submit">Enviar Comentario</button>
+</form>
+
+
+
+//////////////////////////////
+Crear un fichero guardar_comentario.php  que se encargue de recibir los datos del comentario, validarlos y guardarlos en la base de datos
+
+/////////////////////////////////
+
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  // Obtener los datos del comentario
+  $articulo_id = $_POST['articulo_id'];
+  $comentario = $_POST['comentario'];
+
+  // Validar los datos del comentario (puedes realizar validaciones adicionales según tus necesidades)
+
+  // Guardar el comentario en la base de datos
+  $dbconn = pg_connect("host=localhost dbname=tu_basedatos user=tu_usuario password=tu_contraseña")
+    or die('No se pudo conectar: ' . pg_last_error());
+
+
